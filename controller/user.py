@@ -5,16 +5,11 @@ from workhour.dependency import get_db
 from sqlalchemy.orm import Session
 from typing import List
 
-from fastapi_login import LoginManager
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi_login.exceptions import InvalidCredentialsException
 
 from workhour import config
-
-SECRET = config.settings.secret
-
-manager = LoginManager(SECRET, '/user/login')
-
+from workhour.auth import login_manager
 
 router = APIRouter(
     prefix="/user",
@@ -36,6 +31,9 @@ def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     users = crud.get_users(db, skip=skip, limit=limit)
     return users
 
+@router.get('/protected', response_model=schemas.User)
+def protected_route(user=Depends(login_manager)):
+    return user
 
 @router.get("/{user_id}", response_model=schemas.User)
 def read_user(user_id: int, db: Session = Depends(get_db)):
@@ -56,10 +54,14 @@ def login(data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get
     elif password != user.password:
         raise HTTPException(status_code=400, detail="Incorrect password")
 
-    access_token = manager.create_access_token(
-        data={'sub': username}
+    access_token = login_manager.create_access_token(
+        data={'sub': user.id}
     )
     return {'token': access_token}
+
+# @router.get('/v/protected')
+# def protected_route():
+#     return {'user': "user"}
 
 # @router.post("/{user_id}/workhour/", response_model=schemas.Item)
 # def create_item_for_user(
