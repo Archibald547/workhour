@@ -9,7 +9,10 @@ from fastapi_login import LoginManager
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi_login.exceptions import InvalidCredentialsException
 
-SECRET = "super-secret-key"
+from workhour import config
+
+SECRET = config.settings.secret
+
 manager = LoginManager(SECRET, '/user/login')
 
 
