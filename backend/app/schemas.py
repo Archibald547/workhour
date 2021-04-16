@@ -2,20 +2,6 @@ from typing import List, Optional
 from pydantic import BaseModel
 import datetime
 
-class TaskBase(BaseModel):
-    taskname: str
-
-class TaskCreate(TaskBase):
-    fullname: str
-    organization: str
-
-class Task(TaskBase):
-    id: int
-    workhours: List[Workhour] = []
-    
-    class Config:
-        orm_mode = True
-
 class WorkhourBase(BaseModel):
     user_id: int
     task_id: int
@@ -28,6 +14,21 @@ class WorkhourCreate(WorkhourBase):
 
 class Workhour(WorkhourBase):
     id: int
+
+    class Config:
+        orm_mode = True
+
+class TaskBase(BaseModel):
+    taskname: str
+    fullname: str
+    organization: str
+
+class TaskCreate(TaskBase):
+    pass
+
+class Task(TaskBase):
+    id: int
+    workhours: List[Workhour] = []
 
     class Config:
         orm_mode = True

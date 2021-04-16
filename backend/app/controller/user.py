@@ -1,15 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException
-from workhour import schemas
-from workhour import crud, schemas
-from workhour.dependency import get_db
+from app import crud, schemas, config
+from app.dependency import get_db
+from app.auth import login_manager
 from sqlalchemy.orm import Session
 from typing import List
 
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi_login.exceptions import InvalidCredentialsException
 
-from workhour import config
-from workhour.auth import login_manager
 
 router = APIRouter(
     prefix="/user",

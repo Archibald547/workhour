@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import engine
 from app import models
-from app.controller import user
+from app.controller import user, task
 from app.dependency import create_default_data
 
 models.Base.metadata.drop_all(bind=engine)
@@ -26,6 +26,7 @@ app.add_middleware(
 )
 
 app.include_router(user.router)
+app.include_router(task.router)
 
 
 
