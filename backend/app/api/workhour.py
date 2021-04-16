@@ -17,7 +17,7 @@ router = APIRouter(
 def create_workhour(workhour: schemas.WorkhourCreate, db: Session = Depends(get_db)):
     return crud.create_workhour(db=db, workhour=workhour)
 
-@router.get("/", response_model=List[schemas.Workhour])
+@router.get("/", response_model=List[schemas.WorkhourFull])
 def read_workhours(skip: int = 0, limit: int = 100, user_id: int = None, task_id: int = None, db: Session = Depends(get_db)):
     if user_id and task_id:
         workhours = crud.get_workhours_by_user_task(db, skip=skip, limit=limit, user_id=user_id, task_id=task_id)

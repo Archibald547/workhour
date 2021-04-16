@@ -14,7 +14,6 @@ class WorkhourCreate(WorkhourBase):
 
 class Workhour(WorkhourBase):
     id: int
-
     class Config:
         orm_mode = True
 
@@ -28,8 +27,6 @@ class TaskCreate(TaskBase):
 
 class Task(TaskBase):
     id: int
-    workhours: List[Workhour] = []
-
     class Config:
         orm_mode = True
 
@@ -41,8 +38,15 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     id: int
-    # is_active: bool
-    workhours: List[Workhour] = []
-
     class Config:
         orm_mode = True
+
+class UserFull(User):
+    workhours: List[Workhour] = []
+
+class TaskFull(Task):
+    workhours: List[Workhour] = []
+
+class WorkhourFull(Workhour):
+    user: Optional[User]
+    task: Optional[Task]

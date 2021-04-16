@@ -30,7 +30,7 @@ def read_tasks(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 def protected_route(user=Depends(login_manager)):
     return user
 
-@router.get("/{task_id}", response_model=schemas.Task)
+@router.get("/{task_id}", response_model=schemas.TaskFull)
 def read_task(task_id: int, db: Session = Depends(get_db)):
     db_task = crud.get_task(db, task_id=task_id)
     if db_task is None:
