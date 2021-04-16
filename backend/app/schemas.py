@@ -5,7 +5,7 @@ import datetime
 class WorkhourBase(BaseModel):
     user_id: int
     task_id: int
-    day: datetime.date
+    date: datetime.date
     hour: float
     description: Optional[str] = None
 

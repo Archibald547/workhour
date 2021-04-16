@@ -1,0 +1,41 @@
+from fastapi import APIRouter, Depends, HTTPException
+from app import crud, schemas, config
+from app.dependency import get_db
+from app.auth import login_manager
+from sqlalchemy.orm import Session
+from typing import List
+
+
+router = APIRouter(
+    prefix="/workhour",
+    tags=["workhour"],
+    # dependencies=[Depends(get_token_header)],
+    # responses={404: {"description": "Not found"}},
+)
+
+@router.post("/", response_model=schemas.Workhour)
+def create_workhour(workhour: schemas.WorkhourCreate, db: Session = Depends(get_db)):
+    return crud.create_workhour(db=db, workhour=workhour)
+
+@router.get("/", response_model=List[schemas.Workhour])
+def read_workhours(skip: int = 0, limit: int = 100, user_id: int = None, task_id: int = None, db: Session = Depends(get_db)):
+    if user_id and task_id:
+        workhours = crud.get_workhours_by_user_task(db, skip=skip, limit=limit, user_id=user_id, task_id=task_id)
+    elif user_id:
+        workhours = crud.get_workhours_by_user_id(db, skip=skip, limit=limit, user_id=user_id)
+    elif task_id:
+        workhours = crud.get_workhours_by_task_id(db, skip=skip, limit=limit, task_id=task_id)
+    else:
+        workhours = crud.get_workhours(db, skip=skip, limit=limit)
+    return workhours
+
+@router.get('/protected', response_model=schemas.User)
+def protected_route(user=Depends(login_manager)):
+    return user
+
+@router.get("/{workhour_id}", response_model=schemas.Workhour)
+def read_workhour(workhour_id: int, db: Session = Depends(get_db)):
+    db_workhour = crud.get_workhour(db, workhour_id=workhour_id)
+    if db_workhour is None:
+        raise HTTPException(status_code=404, detail="Workhour not found")
+    return db_workhour

@@ -6,9 +6,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import engine
 from app import models
-from app.controller import user, task
-from app.dependency import create_default_data
 
+
+from app.dependency import create_default_data
 models.Base.metadata.drop_all(bind=engine)
 models.Base.metadata.create_all(bind=engine)
 create_default_data()
@@ -16,7 +16,6 @@ create_default_data()
 app = FastAPI()
 
 origins = ["*"]
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -25,8 +24,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from app.api import user, task, workhour
 app.include_router(user.router)
 app.include_router(task.router)
+app.include_router(workhour.router)
 
 
 

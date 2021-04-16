@@ -46,7 +46,7 @@ class Workhour(IdMixin, Base, TimestampMixin):
 
     user_id = Column(Integer, ForeignKey("user.id"))
     task_id = Column(Integer, ForeignKey("task.id"))
-    day = Column(Date)
+    date = Column(Date)
     hour = Column(Numeric(4,2))
     is_overtime = Column(Boolean, default=False)
     description = Column(String(255), index=True)

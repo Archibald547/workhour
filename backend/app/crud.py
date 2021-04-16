@@ -41,6 +41,7 @@ def create_task(db: Session, task: schemas.TaskCreate):
     db.refresh(db_task)
     return db_task
 
+''''''
 
 def get_workhour(db: Session, workhour_id: int):
     return db.query(models.Workhour).filter(models.Workhour.id == workhour_id).first()
@@ -48,17 +49,20 @@ def get_workhour(db: Session, workhour_id: int):
 def get_workhours(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Workhour).offset(skip).limit(limit).all()
 
-def get_workhours_by_user_id(db: Session, user_id: str):
-    return db.query(models.Workhour).filter(models.Workhour.user_id == user_id)
+def get_workhours_by_user_id(db: Session, user_id: int, skip: int = 0, limit: int = 100):
+    return db.query(models.Workhour).filter(models.Workhour.user_id == user_id).offset(skip).limit(limit).all()
 
-def get_workhours_by_task_id(db: Session, task_id: str):
-    return db.query(models.Workhour).filter(models.Workhour.task_id == task_id)
+def get_workhours_by_task_id(db: Session, task_id: int, skip: int = 0, limit: int = 100):
+    return db.query(models.Workhour).filter(models.Workhour.task_id == task_id).offset(skip).limit(limit).all()
+
+def get_workhours_by_user_task(db: Session, user_id: int, task_id: int, skip: int = 0, limit: int = 100):
+    return db.query(models.Workhour).filter(models.Workhour.user_id == user_id, models.Workhour.task_id == task_id).offset(skip).limit(limit).all()
 
 def create_workhour(db: Session, workhour: schemas.WorkhourCreate):
     db_workhour = models.Workhour(
     	user_id=workhour.user_id, 
     	task_id=workhour.task_id, 
-    	day=workhour.day, 
+    	date=workhour.date, 
     	hour=workhour.hour, 
     	description=workhour.description)
     db.add(db_workhour)
