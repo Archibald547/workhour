@@ -1,5 +1,5 @@
-from workhour.database import SessionLocal
-from workhour import models
+from app.database import SessionLocal
+from app import models
 
 def get_db():
     db = SessionLocal()

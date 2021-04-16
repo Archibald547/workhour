@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Date, Time, Float, Numeric
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from database import Base
@@ -19,15 +19,26 @@ class User(IdMixin, Base, TimestampMixin):
     # is_active = Column(Boolean, default=True)
 
     workhours = relationship("Workhour", back_populates="user")
+    # tasks = relationship("UserTask", back_populates="users")
 
 class Task(IdMixin, Base, TimestampMixin):
 
     __tablename__ = "task"
 
-    name = Column(String(255), index=True)
+    taskname = Column(String(255), index=True)
     fullname = Column(String(255))
     organization = Column(String(255))
     workhours = relationship("Workhour", back_populates="task")
+    # users = relationship("UserTask", back_populates="tasks")
+
+# class UserTask(IdMixin, Base, TimestampMixin):
+
+#     __tablename__ = "user_task"
+#     user_id = Column(Integer, ForeignKey("user.id"))
+#     task_id = Column(Integer, ForeignKey("task.id"))
+
+#     users = relationship("User", back_populates="tasks")
+#     tasks = relationship("Task", back_populates="users")
 
 class Workhour(IdMixin, Base, TimestampMixin):
 
@@ -35,6 +46,9 @@ class Workhour(IdMixin, Base, TimestampMixin):
 
     user_id = Column(Integer, ForeignKey("user.id"))
     task_id = Column(Integer, ForeignKey("task.id"))
+    day = Column(Date)
+    hour = Column(Numeric(4,2))
+    is_overtime = Column(Boolean, default=False)
     description = Column(String(255), index=True)
 
     user = relationship("User", back_populates="workhours")

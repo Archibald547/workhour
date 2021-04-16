@@ -1,7 +1,7 @@
 from fastapi_login import LoginManager
-from workhour import config
-from workhour.database import SessionLocal
-from workhour import models
+from app import config
+from app.database import SessionLocal
+from app import models
 
 SECRET = config.settings.SECRET
 login_manager = LoginManager(SECRET, '/user/login')
