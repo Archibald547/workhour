@@ -3,11 +3,12 @@ from pydantic import BaseModel
 import datetime
 
 class WorkhourBase(BaseModel):
-    user_id: int
+    user_id: Optional[int] = None
     task_id: int
     date: datetime.date
     hour: float
     description: Optional[str] = None
+    is_overtime: Optional[bool] = False
 
 class WorkhourCreate(WorkhourBase):
     pass

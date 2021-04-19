@@ -14,7 +14,8 @@ router = APIRouter(
 )
 
 @router.post("/", response_model=schemas.Workhour)
-def create_workhour(workhour: schemas.WorkhourCreate, db: Session = Depends(get_db)):
+def create_workhour(workhour: schemas.WorkhourCreate, db: Session = Depends(get_db), user=Depends(login_manager)):
+    workhour.user_id = user.id
     return crud.create_workhour(db=db, workhour=workhour)
 
 @router.get("/", response_model=List[schemas.WorkhourFull])
@@ -32,6 +33,12 @@ def read_workhours(skip: int = 0, limit: int = 100, user_id: int = None, task_id
 @router.get('/protected', response_model=schemas.User)
 def protected_route(user=Depends(login_manager)):
     return user
+
+@router.get('/my', response_model=List[schemas.WorkhourFull])
+def read_workhours_my(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), user=Depends(login_manager)):
+    user_id = user.id
+    workhours = crud.get_workhours_by_user_id(db, skip=skip, limit=limit, user_id=user_id)
+    return workhours
 
 @router.get("/{workhour_id}", response_model=schemas.Workhour)
 def read_workhour(workhour_id: int, db: Session = Depends(get_db)):

@@ -64,7 +64,8 @@ def create_workhour(db: Session, workhour: schemas.WorkhourCreate):
     	task_id=workhour.task_id, 
     	date=workhour.date, 
     	hour=workhour.hour, 
-    	description=workhour.description)
+    	description=workhour.description,
+        is_overtime=workhour.is_overtime)
     db.add(db_workhour)
     db.commit()
     db.refresh(db_workhour)
