@@ -1,11 +1,12 @@
 <template>
-  <div class="hello">
+  <div>
       <h1>users</h1>
       {{ users }}
       <h1>tasks</h1>
       {{ tasks }}
       <h1>workhours</h1>
       {{ workhours }}
+      {{ info }}
       
   </div>
 </template>
@@ -14,22 +15,28 @@
 import axios from 'axios';
 
 export default {
-  name: 'HelloWorld',
   props: {
     msg: String
   },
-  data () {
+  data() {
     return {
       users: null,
       tasks: null,
-      workhours: null
+      workhours: null,
+      info: null
     }
   },
-  mounted () {
-    axios.get('http://localhost:8000/user').then(response => (this.users = response.data))
-    axios.get('http://localhost:8000/task').then(response => (this.tasks = response.data))
-    axios.get('http://localhost:8000/workhour').then(response => (this.workhours = response.data))
-  }
+  mounted: function () {
+    // a function to call getposts action
+    // alert('mounted')
+    // alert("el屬性： "+this.$el)
+    axios.get('http://localhost:8000/user/').then(response => (this.users = response.data))
+    axios.get('http://localhost:8000/task/').then(response => (this.tasks = response.data))
+    axios.get('http://localhost:8000/workhour/').then(response => (this.workhours = response.data))
+  },
+//   mounted () {
+    
+//   }
 }
 </script>
 

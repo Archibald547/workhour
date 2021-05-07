@@ -1,3 +1,4 @@
+@@ -1,52 +0,0 @@
 <template>
   <div class="hello">
       <h1>users</h1>
@@ -21,7 +22,7 @@ export default {
   data () {
     return {
       users: null,
-      tasks: null,
+      task: null,
       workhours: null
     }
   },

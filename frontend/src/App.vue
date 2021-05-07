@@ -1,23 +1,18 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-  <Test/>
+  <div id="app">
+    <NavBar />
+    <router-view/>
+  </div>
 </template>
-
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
-import Test from './components/Test.vue'
-
-
+// @ is an alias to /src
+import NavBar from '@/components/NavBar.vue'
 export default {
-  name: 'App',
   components: {
-    // HelloWorld,
-    Test
+    NavBar
   }
 }
 </script>
-
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -25,6 +20,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
