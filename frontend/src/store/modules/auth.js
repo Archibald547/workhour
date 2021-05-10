@@ -11,16 +11,28 @@ const getters = {
 };
 const actions = {
     async LogIn({commit}, model) {
-        const result = await axios.post("/api/auth", model)
-        await commit('setToken', model.get('username'))
-        if (result.data.success) {
-            commit("setToken", result.data);
-            // router.push("/");
-          }
+        console.log("logging in")
+        var api = "/user/login"
+        await axios.post(api, model).then(function (response) {
+            console.log(api, response.status)
+            if(response.status == 200){
+                // console.log("success",response)
+                commit("setToken", response.data)
+                console.log("logged in")
+            }
+        })
+        // await commit('setToken', model.get('username'))
+        // if (result.data.success) {
+        //     commit("setToken", result.data);
+        //     // router.push("/");
+        //     console.log("logged in")
+        //   }
     },
     async LogOut({commit}){
-    let token = null
-    commit('logout', token)
+        console.log("logging out")
+        let token = null
+        commit('logout', token)
+        console.log("logged out")
     }
 };
 const mutations = {
@@ -34,10 +46,12 @@ const mutations = {
     setToken: (state, model) => {
         state.token = model.token;
         state.expiration = new Date(model.expiration)
+        console.log(state.token)
+        console.log(state.expiration)
       },
     clearToken: (state) => {
-    state.token = "";
-    state.expiration = Date.now();
+        state.token = "";
+        state.expiration = Date.now();
     }
 };
 export default {

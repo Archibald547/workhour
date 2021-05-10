@@ -19,7 +19,6 @@
                     <td>{{w.task.taskname}}</td>
                     <td>{{w.date}}</td>
                     <td>{{w.hour}}</td>
-                    <td>{{w.date}}</td>
                     <td>{{w.description}}</td>
                     <td>{{w.is_overtime}}</td>
                 </tr>

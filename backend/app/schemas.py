@@ -42,6 +42,10 @@ class User(UserBase):
     class Config:
         orm_mode = True
 
+class UserToken(User):
+    token: Optional[str] = None
+    expiration: Optional[datetime.datetime] = None
+
 class UserFull(User):
     workhours: List[Workhour] = []
 

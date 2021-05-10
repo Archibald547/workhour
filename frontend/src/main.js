@@ -17,7 +17,7 @@ Vue.use(IconsPlugin)
 Vue.use(TablePlugin)
 
 axios.defaults.withCredentials = true
-axios.defaults.baseURL = 'https://gabbyblog.herokuapp.com/';
+axios.defaults.baseURL = 'http://localhost:8000/';
 
 axios.interceptors.response.use(undefined, function (error) {
   if (error) {
