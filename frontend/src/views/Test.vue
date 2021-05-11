@@ -7,7 +7,6 @@
       <h1>workhours</h1>
       {{ workhours }}
       {{ info }}
-      
   </div>
 </template>
 
