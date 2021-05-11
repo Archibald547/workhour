@@ -49,8 +49,8 @@ def test_bcrpt():
         "check hpassword2": bcrypt.checkpw(bpassword2, hpassword)
     }
 
-@router.get('/protected', response_model=schemas.User)
-def protected_route(user=Depends(login_manager)):
+@router.get('/my', response_model=schemas.UserFull)
+def read_user_my(user=Depends(login_manager)):
     return user
 
 @router.post('/login', response_model=schemas.UserToken)

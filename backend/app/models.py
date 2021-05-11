@@ -15,6 +15,7 @@ class User(IdMixin, Base, TimestampMixin):
     __tablename__ = "user"
 
     username = Column(String(100), unique=True, index=True)
+    fullname = Column(String(255))
     password = Column(String(255))
     # is_active = Column(Boolean, default=True)
 

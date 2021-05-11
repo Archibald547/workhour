@@ -1,26 +1,27 @@
 //store/modules/auth.js
 
-import axios from 'axios';
+import { userLogIn} from "../../service/apis.js";
+
 const state = {
     token: "",
     expiration: Date.now(),
     username: null
 };  
 const getters = {
-    isAuthenticated: (state) => state.token.length > 0 && state.expiration > Date.now()
+    getToken: (state) => state.token,
+    // isAuthenticated: (state) => state.token.length > 0 && state.expiration > Date.now()
+    isAuthenticated: () => localStorage.token > 0 && Date.parse(localStorage.expiration) > Date.now()
 };
 const actions = {
     async LogIn({commit}, model) {
         console.log("logging in")
-        var api = "/user/login"
-        await axios.post(api, model).then(function (response) {
-            console.log(api, response.status)
-            if(response.status == 200){
-                // console.log("success",response)
-                commit("setToken", response.data)
-                console.log("logged in")
-            }
-        })
+         await userLogIn(model).then(function (response) {
+                if(response.status == 200){
+                    // console.log("success",response)
+                    commit("setToken", response.data)
+                    
+                }
+            })
         // await commit('setToken', model.get('username'))
         // if (result.data.success) {
         //     commit("setToken", result.data);
@@ -44,10 +45,10 @@ const mutations = {
         state.token = ""
     },
     setToken: (state, model) => {
-        state.token = model.token;
+        state.token = model.token
         state.expiration = new Date(model.expiration)
-        console.log(state.token)
-        console.log(state.expiration)
+        localStorage.setItem( 'token', model.token)
+        localStorage.setItem( 'expiration', new Date(model.expiration) )
       },
     clearToken: (state) => {
         state.token = "";

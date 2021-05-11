@@ -33,6 +33,7 @@ class Task(TaskBase):
 
 class UserBase(BaseModel):
     username: str
+    fullname: str
 
 class UserCreate(UserBase):
     password: str
