@@ -16,9 +16,7 @@ import axios from '../service/http'
 //     })
 // }
 
-export function userLogIn(data){
-    var url = "/user/login"
-    var method = 'post'
+export function postUserLogInAPI(data){
         // await axios.post(api, model).then(function (response) {
         //     console.log(api, response.status)
         //     if(response.status == 200){
@@ -28,8 +26,67 @@ export function userLogIn(data){
         //     }
         // })
     return axios({
-        url: url,
-        method: method,
+        url: "/user/login",
+        method: 'post',
+        data: data
+    })
+}
+
+export function getUserAPI(){
+    return axios({
+        url: "/user/",
+        method: 'get'
+    })
+}
+
+export function getUserMyAPI(){
+    return axios({
+        url: "/user/my",
+        method: 'get'
+    })
+}
+
+export function postUserAPI(data){
+    return axios({
+        url: "/user/",
+        method: 'post',
+        data: data
+    })
+}
+
+export function getTaskAPI(){
+    return axios({
+        url: "/task/",
+        method: 'get'
+    })
+}
+
+export function postTaskAPI(data){
+    return axios({
+        url: "/task/",
+        method: 'post',
+        data: data
+    })
+}
+
+export function getWorkhourAPI(){
+    return axios({
+        url: "/workhour/",
+        method: 'get'
+    })
+}
+
+export function getWorkhourMyPI(){
+    return axios({
+        url: "/workhour/my",
+        method: 'get'
+    })
+}
+
+export function postWorkhourAPI(data){
+    return axios({
+        url: "/workhour/",
+        method: 'post',
         data: data
     })
 }

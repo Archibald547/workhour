@@ -1,7 +1,8 @@
 <template>
+<div>
   <div id="nav">
     <router-link to="/">Home</router-link> |
-    <router-link to="/posts">Posts</router-link> |
+    <!-- <router-link to="/posts">Posts</router-link> | -->
     <router-link to="/users">Users</router-link> |
     <router-link to="/tasks">Tasks</router-link> |
     <router-link to="/workhours">Workhours</router-link> |
@@ -13,19 +14,41 @@
       <router-link to="/login">Login</router-link>
     </span>
   </div>
+  <div>
+    <hr>
+  <div v-if="isLoggedIn">
+        <p>
+          G'day {{fullname}}! You are logged in as {{username}}. :)
+        </p>
+  </div>
+  <div v-else>
+        <p>
+          Please log in to add workhour. 
+        </p>
+  </div>
+  <hr>
+</div>
+</div>
 </template>
 <script>
 export default {
   name: 'NavBar',
+  mounted: function () {
+    if(this.isLoggedIn){
+      this.get_user_my()
+    }
+  },
   computed : {
-      isLoggedIn : function(){ return this.$store.getters.isAuthenticated}
-    },
-    methods: {
-      async logout (){
-        await this.$store.dispatch('LogOut')
-        this.$router.push('/login')
-      }
-    },
+      isLoggedIn : function(){ return this.$store.getters.isAuthenticated},
+      username : function(){ return this.$store.getters.getUsername},
+      fullname : function(){ return this.$store.getters.getFullname}
+  },
+  methods: {
+    async logout (){
+      await this.$store.dispatch('LogOut')
+      this.$router.push('/login')
+    }
+  }
 }
 </script>
 <style>

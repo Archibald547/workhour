@@ -1,6 +1,6 @@
 //store/modules/auth.js
 
-import { userLogIn} from "../../service/apis.js";
+import { postUserLogInAPI} from "../../service/apis.js";
 
 const state = {
     token: "",
@@ -9,17 +9,19 @@ const state = {
 };  
 const getters = {
     getToken: (state) => state.token,
-    // isAuthenticated: (state) => state.token.length > 0 && state.expiration > Date.now()
-    isAuthenticated: () => localStorage.token > 0 && Date.parse(localStorage.expiration) > Date.now()
+    getUsername: (state) => state.username,
+    getFullname: (state) => state.fullname,
+    isAuthenticated: (state) => state.token.length > 0 && state.expiration > Date.now()
+    // isAuthenticated: () => localStorage.token != null && Date.parse(localStorage.expiration) > Date.now()
+    // isAuthenticated: () => localStorage.token != null
+    
 };
 const actions = {
     async LogIn({commit}, model) {
         console.log("logging in")
-         await userLogIn(model).then(function (response) {
+         await postUserLogInAPI(model).then(function (response) {
                 if(response.status == 200){
-                    // console.log("success",response)
-                    commit("setToken", response.data)
-                    
+                    commit("LogIn", response.data)
                 }
             })
         // await commit('setToken', model.get('username'))
@@ -31,29 +33,31 @@ const actions = {
     },
     async LogOut({commit}){
         console.log("logging out")
-        let token = null
-        commit('logout', token)
+        commit('LogOut')
         console.log("logged out")
     }
 };
 const mutations = {
-    setUser(state, username){
-        state.username = username
+    LogIn(state,data){
+        state.username = data.username
+        state.fullname = data.fullname
+        state.token = data.token
+        state.expiration = new Date(data.expiration)
     },
     LogOut(state){
         state.username = null
+        state.fullname = null
         state.token = ""
-    },
-    setToken: (state, model) => {
-        state.token = model.token
-        state.expiration = new Date(model.expiration)
-        localStorage.setItem( 'token', model.token)
-        localStorage.setItem( 'expiration', new Date(model.expiration) )
-      },
-    clearToken: (state) => {
-        state.token = "";
         state.expiration = Date.now();
-    }
+    },
+    // setToken: (state, model) => {
+    //     state.token = model.token
+    //     state.expiration = new Date(model.expiration)
+    //   },
+    // clearToken: (state) => {
+    //     state.token = "";
+        
+    // }
 };
 export default {
   state,

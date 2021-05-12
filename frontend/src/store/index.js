@@ -6,9 +6,11 @@ import auth from './modules/auth';
 // Load Vuex
 Vue.use(Vuex);
 // Create store
-export default new Vuex.Store({
+const store = new Vuex.Store({
   modules: {
     auth
   },
   plugins: [createPersistedState()]
 });
+
+export default store

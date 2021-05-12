@@ -1,28 +1,43 @@
 <template>
   <div class="register">
       <div>
-          <form @submit.prevent="submit">
-            <div>
-              <label for="username">Username:</label>
-              <input type="text" name="username" v-model="form.username">
-            </div>
-            <div>
-              <label for="full_name">Full Name:</label>
-              <input type="text" name="full_name" v-model="form.full_name">
-            </div>
-            <div>
-              <label for="password">Password:</label>
-              <input type="password" name="password" v-model="form.password">
-            </div>
-            <button type="submit"> Submit</button>
-          </form>
+          <form @submit.prevent="post_user">
+        <b-container fluid>
+          <b-row class="my-1">
+            <b-col sm="2">
+              <label for="input-default">User Name:</label>
+            </b-col>
+            <b-col sm="10">
+              <b-form-input id="input-default" placeholder="Enter User Name" v-model="form.username" ></b-form-input>
+            </b-col>
+          </b-row>
+          <b-row class="my-1">
+            <b-col sm="2">
+              <label for="input-default">Full Name:</label>
+            </b-col>
+            <b-col sm="10">
+              <b-form-input id="input-default" placeholder="Enter Full Name" v-model="form.fullname"></b-form-input>
+            </b-col>
+          </b-row>
+          <b-row class="my-1">
+            <b-col sm="2">
+              <label for="input-default">Password:</label>
+            </b-col>
+            <b-col sm="10">
+              <b-form-input type="password" id="input-default" placeholder="Enter password" v-model="form.password"></b-form-input>
+            </b-col>
+          </b-row>
+          <b-button pill variant="primary" type="submit">Register</b-button>
+</b-container>
+ </form>
       </div>
       <p v-if="showError" id="error">Username already exists</p>
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { postUserAPI} from "../service/apis.js";
+import router from '../router/index.js'
 export default {
   name: "Register",
   components: {},
@@ -37,14 +52,21 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["Register"]),
-    async submit() {
+    async post_user() {
       try {
-        await this.Register(this.form);
-        this.$router.push("/posts");
-        this.showError = false
+        var data = {
+          "username": this.form.username,
+          "fullname": this.form.fullname,
+          "password": this.form.password,
+        }
+        await postUserAPI(data).then(function (response) {
+            if(response.status == 200){
+              router.push("/users");
+            }
+        })
       } catch (error) {
-        this.showError = true
+         console.log('Exception: ', error)
+        throw "Sorry you can't create a new task now!"
       }
     },
   },

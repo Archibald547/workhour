@@ -62,9 +62,10 @@
 </template>
 
 <script>
-import axios from 'axios';
-
+import { getTaskAPI, postTaskAPI } from "../service/apis.js";
 export default {
+  components:{
+  },
   props: {
     msg: String
   },
@@ -78,34 +79,43 @@ export default {
       }
     }
   },
+  // computed: function () {
+    // this.get_task()
+  // },
   mounted: function () {
     this.get_task()
   },
   methods: {
     async get_task(){
-      await axios.get('http://localhost:8000/task/').then(response => (this.tasks = response.data))
+      await getTaskAPI().then(response => (this.tasks = response.data))
     },
     async post_task() {
       try {
-        console.log("posting a task")
-        var api = '/task/'
         var body = {
           "taskname": this.form.taskname,
           "fullname": this.form.fullname,
           "organization": this.form.organization,
         }
-        await axios.post(api, body).then(function (response) {
-            console.log("post", api, response.status)
+        // await postTaskAPI(body).then(function (response) {
+        //     if(response.status == 200){
+        //       console.log("posted task")
+        //     }
+        // })
+        await postTaskAPI(body).then(response =>{
             if(response.status == 200){
               console.log("posted task")
+              this.form.taskname = ""
+              this.form.fullname = ""
+              this.form.organization = ""
             }
         })
-      } catch (error) {
+        }
+        catch (error) {
          console.log('Exception: ', error)
         throw "Sorry you can't create a new task now!"
       }
-      await axios.get('http://localhost:8000/task/').then(response => (this.tasks = response.data))
-    },  
+      await getTaskAPI().then(response => (this.tasks = response.data))
+      }
   }
 }
 </script>

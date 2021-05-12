@@ -26,14 +26,15 @@
         </table>
       </div>
       <div v-else>
-        Oh no!!! We have no tasks
+        Oh no!!! We have no workhours
       </div>
 </template>
 
 <script>
-import axios from 'axios';
-
+import { getWorkhourAPI } from "../service/apis.js";
 export default {
+  components:{
+  },
   props: {
     msg: String
   },
@@ -43,8 +44,13 @@ export default {
     }
   },
   mounted: function () {
-    axios.get('http://localhost:8000/workhour/').then(response => (this.workhours = response.data))
+    this.get_workhour()
   },
+   methods: {
+    async get_workhour(){
+      await getWorkhourAPI().then(response => (this.workhours = response.data))
+    }
+  }
 }
 </script>
 

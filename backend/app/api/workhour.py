@@ -30,10 +30,6 @@ def read_workhours(skip: int = 0, limit: int = 100, user_id: int = None, task_id
         workhours = crud.get_workhours(db, skip=skip, limit=limit)
     return workhours
 
-@router.get('/protected', response_model=schemas.User)
-def protected_route(user=Depends(login_manager)):
-    return user
-
 @router.get('/my', response_model=List[schemas.WorkhourFull])
 def read_workhours_my(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), user=Depends(login_manager)):
     user_id = user.id
