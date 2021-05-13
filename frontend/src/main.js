@@ -4,7 +4,7 @@ import router from './router';
 import store from './store';
 // import axios from 'axios';
 
-import { BootstrapVue, IconsPlugin, TablePlugin  } from 'bootstrap-vue'
+import { BootstrapVue, IconsPlugin, TablePlugin, FormPlugin,FormCheckboxPlugin   } from 'bootstrap-vue'
 
 // Import Bootstrap an BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
@@ -20,6 +20,9 @@ Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 Vue.use(TablePlugin)
+Vue.use(FormPlugin)
+Vue.use(FormCheckboxPlugin)
+
 
 // axios.defaults.withCredentials = true
 // axios.defaults.baseURL = 'http://localhost:8000/';

@@ -1,17 +1,39 @@
 <template>
   <div class="login">
     <div>
-      <form @submit.prevent="submit">
+      <!-- <form @submit.prevent="submit">
         <div>
           <label for="username">Username:</label>
-          <input type="text" name="username" v-model="form.username" />
+          <input id="input-default" type="text" name="username" v-model="form.username" />
         </div>
         <div>
           <label for="password">Password:</label>
-          <input type="password" name="password" v-model="form.password" />
+          <input id="input-default" type="password" name="password" v-model="form.password" />
         </div>
         <button type="submit">Submit</button>
-      </form>
+      </form> -->
+      <form @submit.prevent="submit">
+        <b-container fluid>
+          <b-row class="my-1">
+            <b-col sm="2">
+              <label for="input-default">Username:</label>
+            </b-col>
+            <b-col sm="10">
+              <b-form-input id="input-default" placeholder="Enter User Name" v-model="form.username" ></b-form-input>
+            </b-col>
+          </b-row>
+
+          <b-row class="my-2">
+            <b-col sm="2">
+              <label for="input-default">Password:</label>
+            </b-col>
+            <b-col sm="10">
+              <b-form-input id="input-default" type="password" placeholder="Enter password" v-model="form.password"></b-form-input>
+            </b-col>
+          </b-row>
+          <b-button pill variant="primary" type="submit">Submit</b-button>
+        </b-container>
+        </form>
       <p v-if="showError" id="error">Username or Password is incorrect</p>
     </div>
   </div>
@@ -49,6 +71,7 @@ export default {
 };
 </script>
 
+<!--
 <style scoped>
 * {
   box-sizing: border-box;
@@ -77,3 +100,4 @@ input {
   color: red;
 }
 </style>
+-->

@@ -1,11 +1,88 @@
 <template>
+<div>
+  <div class="post_workhour" v-if="isLoggedIn">
+    <form @submit.prevent="post_workhour">
+        <b-container fluid>
+          <b-row class="my-1" v-if="tasks">
+            <b-col sm="2">
+              <label for="input-default">Task:</label>
+            </b-col>
+            <b-col sm="10">
+              <b-form-select v-model="form.task_id" class="mb-3">
+                <b-form-select-option :value="null">Please select a task</b-form-select-option>
+                <b-form-select-option v-for="t in tasks" :key="t.id" :value="t.id"> {{t.id}}.{{t.taskname}} </b-form-select-option>
+              <!-- <b-form-select-option value="a">Option A</b-form-select-option> -->
+              <!-- <b-form-select-option value="b" disabled>Option B (disabled)</b-form-select-option> -->
+              <!-- <b-form-select-option-group label="Grouped options">
+                <b-form-select-option :value="{ C: '3PO' }">Option with object value</b-form-select-option>
+                <b-form-select-option :value="{ R: '2D2' }">Another option with object value</b-form-select-option>
+              </b-form-select-option-group> -->
+            </b-form-select>  
+            </b-col>
+          </b-row>
+
+          <b-row class="my-1">
+            <b-col sm="2">
+              <label for="input-default">Date:</label>
+            </b-col>
+            <b-col sm="10">
+              <b-form-datepicker
+                  placeholder="dd-mm-yyyy"
+                  v-model="form.date" 
+                  :min="minDate" 
+                  :max="maxDate" 
+                  locale="zh" 
+                  menu-class="w-100" 
+                  calendar-width="100%"
+                  today-button
+                  close-button>
+                  </b-form-datepicker>
+            </b-col>
+          </b-row>
+
+          <b-row class="my-1">
+            <b-col sm="2">
+              <label for="input-default">Hour:</label>
+            </b-col>
+            <b-col sm="10">
+              <b-form-input id="input-default" placeholder="Enter task organization name" v-model="form.hour"></b-form-input>
+            </b-col>
+          </b-row>
+
+          <b-row class="my-1">
+            <b-col sm="2">
+              <label for="input-default">Description:</label>
+            </b-col>
+            <b-col sm="10">
+              <b-form-input id="input-default" placeholder="Enter description" v-model="form.description"></b-form-input>
+            </b-col>
+          </b-row>
+
+          <b-row class="my-1">
+            <b-col sm="2">
+              <label for="input-default">is_overtime:</label>
+            </b-col>
+            <b-col sm="1">
+              <b-form-checkbox id="checkbox-1" v-model="form.is_overtime" name="checkbox-1" switch> </b-form-checkbox>
+            </b-col>
+          
+          <b-col sm="9">
+            <b-button pill variant="primary" type="submit">Add Workhour</b-button>
+          </b-col>
+          </b-row>
+          <p></p>
+          
+          <p></p>
+    </b-container>
+    </form>
+  </div>
   <div class="workhours" v-if="workhours">
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>id</th>
-                    <th>user-name</th>
-                    <th>task-name</th>
+                    <th>username</th>
+                    <th>taskname</th>
                     <th>date</th>
                     <th>hour</th>
                     <th>description</th>
@@ -28,33 +105,88 @@
       <div v-else>
         Oh no!!! We have no workhours
       </div>
+</div>
 </template>
 
 <script>
-import { getWorkhourAPI } from "../service/apis.js";
+import { getTaskAPI, getWorkhourAPI, postWorkhourAPI } from "../service/apis.js";
 export default {
-  components:{
+  components: {
   },
   props: {
     msg: String
   },
+  computed: {
+    isLoggedIn : function(){ return this.$store.getters.isAuthenticated},
+  },
   data() {
+    const now = new Date()
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+      // 15th two months prior
+      const minDate = new Date(today)
+      minDate.setMonth(minDate.getMonth() - 2)
+      // 15th in two months
+      const maxDate = new Date(today)
+      maxDate.setMonth(maxDate.getMonth() + 2)
     return {
+      tasks: null,
       workhours: null,
+      toDate: today.toISOString().substring(0, 10),
+      minDate: minDate,
+      maxDate: maxDate,
+      form: {
+        task_id: '',
+        date: today.toISOString().substring(0, 10),
+        hour: '',
+        description: '',
+        is_overtime: false
+      },
     }
   },
   mounted: function () {
     this.get_workhour()
+    this.get_task()
   },
    methods: {
+     async get_task(){
+      await getTaskAPI().then(response => (this.tasks = response.data))
+    },
     async get_workhour(){
       await getWorkhourAPI().then(response => (this.workhours = response.data))
-    }
+    },
+    async post_workhour() {
+      try {
+        var data = {
+          "task_id": this.form.task_id,
+          "date": this.form.date,
+          "hour": this.form.hour,
+          "description": this.form.description,
+          "is_overtime": this.form.is_overtime,
+          
+        }
+        console.log(data)
+        await postWorkhourAPI(data).then(response =>{
+            if(response.status == 200){
+              console.log("posted task")
+              this.form.task_id = ""
+              this.form.date = this.toDate,
+              this.form.hour = ""
+              this.form.description = ""
+              this.form.is_overtime = false
+            }
+        })
+        }
+        catch (error) {
+         console.log('Exception: ', error)
+        throw "Sorry you can't create a new task now!"
+      }
+      await getWorkhourAPI().then(response => (this.workhours = response.data))
+      }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+<!-- Add "scoped" attribute to limit CSS to this component only 
 <style scoped>
 h3 {
   margin: 40px 0 0;
@@ -71,3 +203,4 @@ a {
   color: #42b983;
 }
 </style>
+-->

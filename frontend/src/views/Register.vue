@@ -5,7 +5,7 @@
         <b-container fluid>
           <b-row class="my-1">
             <b-col sm="2">
-              <label for="input-default">User Name:</label>
+              <label for="input-default">Username:</label>
             </b-col>
             <b-col sm="10">
               <b-form-input id="input-default" placeholder="Enter User Name" v-model="form.username" ></b-form-input>
@@ -73,6 +73,7 @@ export default {
 };
 </script>
 
+<!--
 <style scoped>
 * {
   box-sizing: border-box;
@@ -101,3 +102,4 @@ input {
   color: red;
 }
 </style>
+-->
