@@ -19,7 +19,7 @@ import store from '../store';
 // }
 
 axios.defaults.withCredentials = true
-axios.defaults.baseURL = 'http://localhost:8000/';
+axios.defaults.baseURL = 'http://192.168.0.123:8000/';
 
 // 請求攔截
 axios.interceptors.request.use(

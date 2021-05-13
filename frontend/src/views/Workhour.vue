@@ -8,9 +8,9 @@
               <label for="input-default">Task:</label>
             </b-col>
             <b-col sm="10">
-              <b-form-select v-model="form.task_id" class="mb-3">
+              <b-form-select v-model="form.task_id" :select-size="4" class="form-control">
                 <b-form-select-option :value="null">Please select a task</b-form-select-option>
-                <b-form-select-option v-for="t in tasks" :key="t.id" :value="t.id"> {{t.id}}.{{t.taskname}} </b-form-select-option>
+                <b-form-select-option v-for="t in tasks" :key="t.id" :value="t.id"> {{t.id}}.{{t.taskname}}  {{t.fullname}} </b-form-select-option>
               <!-- <b-form-select-option value="a">Option A</b-form-select-option> -->
               <!-- <b-form-select-option value="b" disabled>Option B (disabled)</b-form-select-option> -->
               <!-- <b-form-select-option-group label="Grouped options">
@@ -54,7 +54,7 @@
               <label for="input-default">Description:</label>
             </b-col>
             <b-col sm="10">
-              <b-form-input id="input-default" placeholder="Enter description" v-model="form.description"></b-form-input>
+              <b-form-input id="input-default" placeholder="Enter description (Optional)" v-model="form.description"></b-form-input>
             </b-col>
           </b-row>
 

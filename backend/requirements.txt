@@ -4,8 +4,10 @@ async-exit-stack==1.0.1
 async-generator==1.10
 attrs==19.3.0
 Automat==0.8.0
+bcrypt==3.2.0
 blinker==1.4
 certifi==2019.11.28
+cffi==1.14.5
 chardet==3.0.4
 Click==7.0
 cloud-init==20.4
@@ -53,6 +55,7 @@ pexpect==4.6.0
 promise==2.3
 pyasn1==0.4.2
 pyasn1-modules==0.2.1
+pycparser==2.20
 pydantic==1.8.1
 PyGObject==3.36.0
 PyHamcrest==1.9.0
