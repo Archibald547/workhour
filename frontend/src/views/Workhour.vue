@@ -38,10 +38,10 @@
             <b-col sm="2">
               <label for="input-default">Hour:</label>
             </b-col>
-            <b-col sm="2">
+            <b-col sm="1">
               <b-form-input type='number' min=0.5 max=8 step=0.5 id="input-default" placeholder="Enter hour(s) of work" v-model="form.hour" required></b-form-input>
             </b-col>
-             <b-col sm="8">
+             <b-col sm="9">
               <b-form-input id="type-range" type="range" min=0.5 max=8 step=0.5 class="w-100 p-3 bg-secondary text-light" v-model="form.hour" required></b-form-input>
             </b-col>
           </b-row>
@@ -103,7 +103,7 @@
         </table>
       </div>
       <div v-else>
-        Oh no!!! We have no workhours
+        No workhours
       </div>
 </div>
 </template>

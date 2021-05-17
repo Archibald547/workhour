@@ -24,7 +24,7 @@
         </table>
     </div>
     <div v-else>
-      Oh no!!! We have no tasks
+      No tasks
     </div>
     <div> 
       </div>

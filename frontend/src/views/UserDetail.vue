@@ -19,7 +19,7 @@
 </tbody>
 </table>
 </div>
-<div class="workhours" v-if="user.workhours">
+<div class="workhours" v-if="user.workhours.length">
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
@@ -49,7 +49,7 @@
         </table>
       </div>
       <div v-else>
-        Oh no!!! We have no workhours
+        No workhours
       </div>
       </div>
 </template>
