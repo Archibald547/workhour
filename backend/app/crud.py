@@ -41,6 +41,16 @@ def create_task(db: Session, task: schemas.TaskCreate):
     db.refresh(db_task)
     return db_task
 
+def update_task(db: Session, task_id: int, task: schemas.TaskUpdate):
+    db_task = db.query(models.Task).filter(models.Task.id == task_id).first()
+    if db_task is None:
+        return None
+    for var, value in vars(task).items():
+        setattr(db_task, var, value) if value else None
+    db.add(db_task)
+    db.commit()
+    db.refresh(db_task)
+    return db_task
 ''''''
 
 def get_workhour(db: Session, workhour_id: int):
@@ -66,6 +76,17 @@ def create_workhour(db: Session, workhour: schemas.WorkhourCreate):
     	hour=workhour.hour, 
     	description=workhour.description,
         is_overtime=workhour.is_overtime)
+    db.add(db_workhour)
+    db.commit()
+    db.refresh(db_workhour)
+    return db_workhour
+
+def update_workhour(db: Session, workhour_id: int, workhour: schemas.WorkhourUpdate):
+    db_workhour = db.query(models.Workhour).filter(models.Workhour.id == workhour_id).first()
+    if db_workhour is None:
+        return None
+    for var, value in vars(workhour).items():
+        setattr(db_workhour, var, value) if value else None
     db.add(db_workhour)
     db.commit()
     db.refresh(db_workhour)

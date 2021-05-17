@@ -51,6 +51,7 @@ class Workhour(IdMixin, Base, TimestampMixin):
     hour = Column(Numeric(4,2))
     is_overtime = Column(Boolean, default=False)
     description = Column(String(255), index=True)
+    active = Column(Boolean, default=True)
 
     user = relationship("User", back_populates="workhours", uselist=False)
     task = relationship("Task", back_populates="workhours", uselist=False)

@@ -10,6 +10,9 @@ class WorkhourBase(BaseModel):
     description: Optional[str] = None
     is_overtime: Optional[bool] = False
 
+class WorkhourUpdate(WorkhourBase):
+    pass
+
 class WorkhourCreate(WorkhourBase):
     pass
 
@@ -24,6 +27,9 @@ class TaskBase(BaseModel):
     organization: str
 
 class TaskCreate(TaskBase):
+    pass
+
+class TaskUpdate(TaskBase):
     pass
 
 class Task(TaskBase):
@@ -47,12 +53,14 @@ class UserToken(User):
     token: Optional[str] = None
     expiration: Optional[datetime.datetime] = None
 
-class UserFull(User):
-    workhours: List[Workhour] = []
-
-class TaskFull(Task):
-    workhours: List[Workhour] = []
-
 class WorkhourFull(Workhour):
     user: Optional[User]
     task: Optional[Task]
+
+class UserFull(User):
+    workhours: List[WorkhourFull] = []
+
+class TaskFull(Task):
+    workhours: List[WorkhourFull] = []
+
+

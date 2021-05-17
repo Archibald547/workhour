@@ -8,8 +8,8 @@
               <label for="input-default">Task:</label>
             </b-col>
             <b-col sm="10">
-              <b-form-select v-model="form.task_id" :select-size="4" class="form-control">
-                <b-form-select-option :value="null">Please select a task</b-form-select-option>
+              <b-form-select v-model="form.task_id" :select-size="4" class="form-control" required>
+                <!-- <b-form-select-option :value="null">Please select a task</b-form-select-option> -->
                 <b-form-select-option v-for="t in tasks" :key="t.id" :value="t.id"> {{t.id}}.{{t.taskname}}  {{t.fullname}} </b-form-select-option>
               <!-- <b-form-select-option value="a">Option A</b-form-select-option> -->
               <!-- <b-form-select-option value="b" disabled>Option B (disabled)</b-form-select-option> -->
@@ -31,6 +31,7 @@
                   v-model="form.date" 
                   :min="minDate" 
                   :max="maxDate" 
+                  required
                   locale="zh" 
                   menu-class="w-100" 
                   calendar-width="100%"
@@ -45,7 +46,7 @@
               <label for="input-default">Hour:</label>
             </b-col>
             <b-col sm="10">
-              <b-form-input id="input-default" placeholder="Enter task organization name" v-model="form.hour"></b-form-input>
+              <b-form-input type='number' min=0 max=8 required id="input-default" placeholder="Enter hour(s) of work" v-model="form.hour"></b-form-input>
             </b-col>
           </b-row>
 
@@ -54,7 +55,8 @@
               <label for="input-default">Description:</label>
             </b-col>
             <b-col sm="10">
-              <b-form-input id="input-default" placeholder="Enter description (Optional)" v-model="form.description"></b-form-input>
+              <!-- <b-form-input type='textarea' id="input-default" placeholder="Enter description (Optional)" v-model="form.description"></b-form-input> -->
+              <b-form-textarea placeholder="Enter description (Optional)" rows="4" v-model="form.description"></b-form-textarea>
             </b-col>
           </b-row>
 
@@ -79,6 +81,9 @@
   <div class="workhours" v-if="workhours">
         <table class="table table-striped table-bordered">
             <thead>
+              <tr>
+                    <th colspan="7">Workhours</th>
+                </tr>
                 <tr>
                     <th>id</th>
                     <th>username</th>
@@ -90,7 +95,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="w in workhours" :key="w.id">
+                <!-- <tr v-for="w in workhours" :key="w.id"> -->
+                <router-link v-for="w in workhours" :key="w.id" :to="{name:'WorkhourDetail', params: { id: w.id}}" tag="tr">
                     <td>{{w.id}}</td>
                     <td>{{w.user.username}}</td>
                     <td>{{w.task.taskname}}</td>
@@ -98,7 +104,8 @@
                     <td>{{w.hour}}</td>
                     <td>{{w.description}}</td>
                     <td>{{w.is_overtime}}</td>
-                </tr>
+                <!-- </tr> -->
+                </router-link>
             </tbody>
         </table>
       </div>
@@ -148,7 +155,7 @@ export default {
     this.get_task()
   },
    methods: {
-     async get_task(){
+    async get_task(){
       await getTaskAPI().then(response => (this.tasks = response.data))
     },
     async get_workhour(){

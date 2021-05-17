@@ -9,6 +9,9 @@ import Test from '../views/Test'
 import User from '../views/User'
 import Task from '../views/Task'
 import Workhour from '../views/Workhour'
+import UserDetail from '../views/UserDetail'
+import TaskDetail from '../views/TaskDetail'
+import WorkhourDetail from '../views/WorkhourDetail'
 
 Vue.use(VueRouter)
 const routes = [
@@ -42,23 +45,35 @@ const routes = [
     meta: { guest: true },
   },
   {
-    path: '/users',
+    path: '/user',
     name: "User",
     component: User,
-    meta: { guest: true },
   },
   {
-    path: '/tasks',
+    path: '/task',
     name: "Task",
     component: Task,
-    meta: { guest: true },
   },
   {
-    path: '/workhours',
+    path: '/workhour',
     name: "Workhour",
     component: Workhour,
-    meta: { guest: true },
-  }
+  },
+  {
+    path: '/user/:id',
+    name: "UserDetail",
+    component: UserDetail,
+  },
+  {
+    path: '/task/:id',
+    name: "TaskDetail",
+    component: TaskDetail,
+  },
+  {
+    path: '/workhour/:id',
+    name: "WorkhourDetail",
+    component: WorkhourDetail,
+  },
 ]
 const router = new VueRouter({
   mode: 'history',

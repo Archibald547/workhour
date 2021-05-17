@@ -3,6 +3,9 @@
   <div v-if="tasks">
         <table class="table table-striped table-bordered">
             <thead>
+              <tr>
+                    <th colspan="4">Tasks</th>
+                </tr>
                 <tr>
                     <th>id</th>
                     <th>taskname</th>
@@ -11,12 +14,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="t in tasks" :key="t.id">
+                <!-- <tr v-for="t in tasks" :key="t.id"> -->
+                <router-link v-for="t in tasks" :key="t.id" :to="{name:'TaskDetail', params: { id: t.id}}" tag="tr">
                     <td>{{t.id}}</td>
                     <td>{{t.taskname}}</td>
                     <td>{{t.fullname}}</td>
                     <td>{{t.organization}}</td>
-                </tr>
+                <!-- </tr> -->
+                </router-link>
             </tbody>
         </table>
     </div>

@@ -39,6 +39,13 @@ export function getUserAPI(){
     })
 }
 
+export function getUserIdAPI(user_id){
+    return axios({
+        url: "/user/" + user_id,
+        method: 'get'
+    })
+}
+
 export function getUserMyAPI(){
     return axios({
         url: "/user/my",
@@ -61,6 +68,13 @@ export function getTaskAPI(){
     })
 }
 
+export function getTaskIdAPI(task_id){
+    return axios({
+        url: "/task/" + task_id,
+        method: 'get'
+    })
+}
+
 export function postTaskAPI(data){
     return axios({
         url: "/task/",
@@ -72,6 +86,13 @@ export function postTaskAPI(data){
 export function getWorkhourAPI(){
     return axios({
         url: "/workhour/",
+        method: 'get'
+    })
+}
+
+export function getWorkhourIdAPI(workhour_id){
+    return axios({
+        url: "/workhour/" + workhour_id,
         method: 'get'
     })
 }

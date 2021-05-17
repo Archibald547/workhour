@@ -2,6 +2,7 @@
 <div class="posts" v-if="users">
 <table class="table table-striped table-bordered">
 <thead>
+  <tr><th colspan="3">Users</th></tr>
 <tr>
 <th>id</th>
 <th>username</th>
@@ -9,11 +10,16 @@
 </tr>
 </thead>
 <tbody>
-<tr v-for="u in users" :key="u.id">
+<!-- <tr v-for="u in users" :key="u.id"> -->
+<router-link v-for="u in users" :key="u.id" :to="{name:'UserDetail', params: { id: u.id}}" tag="tr">
 <td>{{u.id}}</td>
 <td>{{u.username}}</td>
 <td>{{u.fullname}}</td>
-</tr>
+</router-link>
+<!-- <td><router-link :to="{name:'UserDetail', params: { id: u.id}}">{{u.id}}</router-link></td>
+<td><router-link :to="{name:'UserDetail', params: { id: u.id}}">{{u.username}}</router-link></td>
+<td><router-link :to="{name:'UserDetail', params: { id: u.id}}">{{u.fullname}}</router-link></td> -->
+<!-- </tr> -->
 </tbody>
 </table>
 </div>
