@@ -6,18 +6,16 @@
     <router-link to="/task">Tasks</router-link> |
     <router-link to="/workhour">Workhours</router-link> |
     <span v-if="isLoggedIn">
-      <a @click="logout">Logout</a>
+      <a @click="logout">Logout</a> ({{username}})
     </span>
     <span v-else>
       <router-link to="/register">Register</router-link> |
       <router-link to="/login">Login</router-link>
     </span>
   </div>
-  <div>
-    <hr>
   <div v-if="isLoggedIn">
         <p>
-          G'day {{fullname}}! You are logged in as {{username}}. :)
+          G'day {{fullname}}!
         </p>
   </div>
   <div v-else>
@@ -27,16 +25,10 @@
   </div>
   <hr>
 </div>
-</div>
 </template>
 <script>
 export default {
   name: 'NavBar',
-  mounted: function () {
-    if(this.isLoggedIn){
-      this.get_user_my()
-    }
-  },
   computed : {
       isLoggedIn : function(){ return this.$store.getters.isAuthenticated},
       username : function(){ return this.$store.getters.getUsername},

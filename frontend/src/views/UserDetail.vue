@@ -1,5 +1,5 @@
 <template>
-<div class="user-detail">
+<div class="user-detail" v-if="user">
 <div>
 <table class="table table-striped table-bordered">
 <thead>

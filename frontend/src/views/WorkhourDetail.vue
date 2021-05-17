@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="workhours">
+  <div class="workhours"  v-if="workhour">
         <table class="table table-striped table-bordered">
             <thead>
               <tr>

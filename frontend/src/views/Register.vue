@@ -13,18 +13,18 @@
           </b-row>
           <b-row class="my-1">
             <b-col sm="2">
-              <label for="input-default">Full Name:</label>
+              <label for="input-default-2">Full Name:</label>
             </b-col>
             <b-col sm="10">
-              <b-form-input id="input-default" placeholder="Enter Full Name" v-model="form.fullname" required></b-form-input>
+              <b-form-input id="input-default-2" placeholder="Enter Full Name" v-model="form.fullname" required></b-form-input>
             </b-col>
           </b-row>
           <b-row class="my-1">
             <b-col sm="2">
-              <label for="input-default">Password:</label>
+              <label for="input-default-3">Password:</label>
             </b-col>
             <b-col sm="10">
-              <b-form-input type="password" id="input-default" placeholder="Enter password" v-model="form.password" required></b-form-input>
+              <b-form-input type="password" id="input-default-3" placeholder="Enter password" v-model="form.password" required></b-form-input>
             </b-col>
           </b-row>
           <b-button pill variant="primary" type="submit">Register</b-button>

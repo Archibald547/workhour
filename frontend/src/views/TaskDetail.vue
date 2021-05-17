@@ -1,5 +1,5 @@
 <template>
-<div>
+<div  v-if="task">
   <div>
         <table class="table table-striped table-bordered">
             <thead>

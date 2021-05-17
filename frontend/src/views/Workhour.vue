@@ -8,7 +8,7 @@
               <label for="input-default">Task:</label>
             </b-col>
             <b-col sm="10">
-              <b-form-select v-model="form.task_id" :select-size="4" class="form-control" required>
+              <b-form-select v-model="form.task_id" :select-size="6" class="form-control" required>
                 <b-form-select-option v-for="t in tasks" :key="t.id" :value="t.id"> {{t.id}}.{{t.taskname}}  {{t.fullname}} </b-form-select-option>
             </b-form-select>  
             </b-col>

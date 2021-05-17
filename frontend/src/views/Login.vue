@@ -13,10 +13,10 @@
           </b-row>
           <b-row class="my-2">
             <b-col sm="2">
-              <label for="input-default">Password:</label>
+              <label for="input-default-2">Password:</label>
             </b-col>
             <b-col sm="10">
-              <b-form-input id="input-default" type="password" placeholder="Enter password" v-model="form.password" required></b-form-input>
+              <b-form-input id="input-default-2" type="password" placeholder="Enter password" v-model="form.password" required></b-form-input>
             </b-col>
           </b-row>
           <b-button pill variant="primary" type="submit">Submit</b-button>
