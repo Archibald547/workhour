@@ -39,5 +39,4 @@ def create_default_data():
 	]
 	db.bulk_save_objects(objects)
 	db.commit()
-	# db.refresh(db_user)
 	db.close()

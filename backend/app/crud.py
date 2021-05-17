@@ -19,7 +19,6 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.commit()
     db.refresh(db_user)
     return db_user
-
 ''''''
 
 def get_task(db: Session, task_id: int):
@@ -91,13 +90,3 @@ def update_workhour(db: Session, workhour_id: int, workhour: schemas.WorkhourUpd
     db.commit()
     db.refresh(db_workhour)
     return db_workhour
-
-# def get_items(db: Session, skip: int = 0, limit: int = 100):
-#     return db.query(models.Item).offset(skip).limit(limit).all()
-
-# def create_user_item(db: Session, item: schemas.ItemCreate, user_id: int):
-#     db_item = models.Item(**item.dict(), owner_id=user_id)
-#     db.add(db_item)
-#     db.commit()
-#     db.refresh(db_item)
-#     return db_item

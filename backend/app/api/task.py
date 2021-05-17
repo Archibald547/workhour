@@ -5,12 +5,9 @@ from app.auth import login_manager
 from sqlalchemy.orm import Session
 from typing import List
 
-
 router = APIRouter(
     prefix="/task",
     tags=["task"],
-    # dependencies=[Depends(get_token_header)],
-    # responses={404: {"description": "Not found"}},
 )
 
 @router.post("/", response_model=schemas.Task)

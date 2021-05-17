@@ -4,18 +4,14 @@ from app.dependency import get_db
 from app.auth import login_manager
 from sqlalchemy.orm import Session
 from typing import List
-
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi_login.exceptions import InvalidCredentialsException
-
 import bcrypt
 from datetime import datetime, timedelta
 
 router = APIRouter(
     prefix="/user",
     tags=["user"],
-    # dependencies=[Depends(get_token_header)],
-    # responses={404: {"description": "Not found"}},
 )
 
 @router.post("/", response_model=schemas.User)
@@ -70,7 +66,6 @@ def login(data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get
     user.token = access_token
     user.expiration = datetime.now() + timedelta(hours=24)
     return user
-    # return {'token': access_token}
 
 @router.get("/{user_id}", response_model=schemas.UserFull)
 def read_user(user_id: int, db: Session = Depends(get_db)):
