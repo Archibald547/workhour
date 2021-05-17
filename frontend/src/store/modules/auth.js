@@ -1,5 +1,4 @@
 //store/modules/auth.js
-
 import { postUserLogInAPI} from "../../service/apis.js";
 
 const state = {
@@ -12,29 +11,18 @@ const getters = {
     getUsername: (state) => state.username,
     getFullname: (state) => state.fullname,
     isAuthenticated: (state) => state.token.length > 0 && state.expiration > Date.now()
-    // isAuthenticated: () => localStorage.token != null && Date.parse(localStorage.expiration) > Date.now()
-    // isAuthenticated: () => localStorage.token != null
     
 };
 const actions = {
     async LogIn({commit}, model) {
-        console.log("logging in")
          await postUserLogInAPI(model).then(function (response) {
                 if(response.status == 200){
                     commit("LogIn", response.data)
                 }
             })
-        // await commit('setToken', model.get('username'))
-        // if (result.data.success) {
-        //     commit("setToken", result.data);
-        //     // router.push("/");
-        //     console.log("logged in")
-        //   }
     },
     async LogOut({commit}){
-        console.log("logging out")
         commit('LogOut')
-        console.log("logged out")
     }
 };
 const mutations = {
@@ -50,14 +38,6 @@ const mutations = {
         state.token = ""
         state.expiration = Date.now();
     },
-    // setToken: (state, model) => {
-    //     state.token = model.token
-    //     state.expiration = new Date(model.expiration)
-    //   },
-    // clearToken: (state) => {
-    //     state.token = "";
-        
-    // }
 };
 export default {
   state,

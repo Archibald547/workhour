@@ -14,13 +14,11 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- <tr v-for="t in tasks" :key="t.id"> -->
                 <router-link v-for="t in tasks" :key="t.id" :to="{name:'TaskDetail', params: { id: t.id}}" tag="tr">
                     <td>{{t.id}}</td>
                     <td>{{t.taskname}}</td>
                     <td>{{t.fullname}}</td>
                     <td>{{t.organization}}</td>
-                <!-- </tr> -->
                 </router-link>
             </tbody>
         </table>
@@ -38,7 +36,7 @@
               <label for="input-default">Task Name:</label>
             </b-col>
             <b-col sm="10">
-              <b-form-input id="input-default" placeholder="Enter task name" v-model="form.taskname" ></b-form-input>
+              <b-form-input id="input-default" placeholder="Enter task name" v-model="form.taskname" required></b-form-input>
             </b-col>
           </b-row>
 
@@ -47,7 +45,7 @@
               <label for="input-default">Full Name:</label>
             </b-col>
             <b-col sm="10">
-              <b-form-input id="input-default" placeholder="Enter task full name" v-model="form.fullname"></b-form-input>
+              <b-form-input id="input-default" placeholder="Enter task full name" v-model="form.fullname" required></b-form-input>
             </b-col>
           </b-row>
 
@@ -56,7 +54,7 @@
               <label for="input-default">Organization Name:</label>
             </b-col>
             <b-col sm="10">
-              <b-form-input id="input-default" placeholder="Enter task organization name" v-model="form.organization"></b-form-input>
+              <b-form-input id="input-default" placeholder="Enter task organization name" v-model="form.organization" required></b-form-input>
             </b-col>
           </b-row>
           <b-button pill variant="primary" type="submit">Submit</b-button>
@@ -84,9 +82,6 @@ export default {
       }
     }
   },
-  // computed: function () {
-    // this.get_task()
-  // },
   mounted: function () {
     this.get_task()
   },
@@ -101,14 +96,8 @@ export default {
           "fullname": this.form.fullname,
           "organization": this.form.organization,
         }
-        // await postTaskAPI(body).then(function (response) {
-        //     if(response.status == 200){
-        //       console.log("posted task")
-        //     }
-        // })
         await postTaskAPI(body).then(response =>{
             if(response.status == 200){
-              console.log("posted task")
               this.form.taskname = ""
               this.form.fullname = ""
               this.form.organization = ""
@@ -116,7 +105,6 @@ export default {
         })
         }
         catch (error) {
-         console.log('Exception: ', error)
         throw "Sorry you can't create a new task now!"
       }
       await getTaskAPI().then(response => (this.tasks = response.data))

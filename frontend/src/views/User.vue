@@ -10,16 +10,11 @@
 </tr>
 </thead>
 <tbody>
-<!-- <tr v-for="u in users" :key="u.id"> -->
 <router-link v-for="u in users" :key="u.id" :to="{name:'UserDetail', params: { id: u.id}}" tag="tr">
 <td>{{u.id}}</td>
 <td>{{u.username}}</td>
 <td>{{u.fullname}}</td>
 </router-link>
-<!-- <td><router-link :to="{name:'UserDetail', params: { id: u.id}}">{{u.id}}</router-link></td>
-<td><router-link :to="{name:'UserDetail', params: { id: u.id}}">{{u.username}}</router-link></td>
-<td><router-link :to="{name:'UserDetail', params: { id: u.id}}">{{u.fullname}}</router-link></td> -->
-<!-- </tr> -->
 </tbody>
 </table>
 </div>
@@ -52,16 +47,9 @@ export default {
   },
   mounted: function () {
     this.get_user()
-    if(this.isLoggedIn){
-      console.log("i am logged in")
-    }
-    else{
-      console.log("i am not logged in")
-    }
   },
   methods: {
     async get_user(){
-      // await axios.get('/user/').then(response => (this.users = response.data))
       await getUserAPI().then( (response) => this.users = response.data)
     }
   }

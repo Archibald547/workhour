@@ -9,14 +9,7 @@
             </b-col>
             <b-col sm="10">
               <b-form-select v-model="form.task_id" :select-size="4" class="form-control" required>
-                <!-- <b-form-select-option :value="null">Please select a task</b-form-select-option> -->
                 <b-form-select-option v-for="t in tasks" :key="t.id" :value="t.id"> {{t.id}}.{{t.taskname}}  {{t.fullname}} </b-form-select-option>
-              <!-- <b-form-select-option value="a">Option A</b-form-select-option> -->
-              <!-- <b-form-select-option value="b" disabled>Option B (disabled)</b-form-select-option> -->
-              <!-- <b-form-select-option-group label="Grouped options">
-                <b-form-select-option :value="{ C: '3PO' }">Option with object value</b-form-select-option>
-                <b-form-select-option :value="{ R: '2D2' }">Another option with object value</b-form-select-option>
-              </b-form-select-option-group> -->
             </b-form-select>  
             </b-col>
           </b-row>
@@ -45,8 +38,11 @@
             <b-col sm="2">
               <label for="input-default">Hour:</label>
             </b-col>
-            <b-col sm="10">
-              <b-form-input type='number' min=0 max=8 required id="input-default" placeholder="Enter hour(s) of work" v-model="form.hour"></b-form-input>
+            <b-col sm="2">
+              <b-form-input type='number' min=0.5 max=8 step=0.5 id="input-default" placeholder="Enter hour(s) of work" v-model="form.hour" required></b-form-input>
+            </b-col>
+             <b-col sm="8">
+              <b-form-input id="type-range" type="range" min=0.5 max=8 step=0.5 class="w-100 p-3 bg-secondary text-light" v-model="form.hour" required></b-form-input>
             </b-col>
           </b-row>
 
@@ -55,7 +51,6 @@
               <label for="input-default">Description:</label>
             </b-col>
             <b-col sm="10">
-              <!-- <b-form-input type='textarea' id="input-default" placeholder="Enter description (Optional)" v-model="form.description"></b-form-input> -->
               <b-form-textarea placeholder="Enter description (Optional)" rows="4" v-model="form.description"></b-form-textarea>
             </b-col>
           </b-row>
@@ -95,7 +90,6 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- <tr v-for="w in workhours" :key="w.id"> -->
                 <router-link v-for="w in workhours" :key="w.id" :to="{name:'WorkhourDetail', params: { id: w.id}}" tag="tr">
                     <td>{{w.id}}</td>
                     <td>{{w.user.username}}</td>
@@ -104,7 +98,6 @@
                     <td>{{w.hour}}</td>
                     <td>{{w.description}}</td>
                     <td>{{w.is_overtime}}</td>
-                <!-- </tr> -->
                 </router-link>
             </tbody>
         </table>
@@ -144,7 +137,7 @@ export default {
       form: {
         task_id: '',
         date: today.toISOString().substring(0, 10),
-        hour: '',
+        hour: 1,
         description: '',
         is_overtime: false
       },
@@ -171,20 +164,17 @@ export default {
           "is_overtime": this.form.is_overtime,
           
         }
-        console.log(data)
         await postWorkhourAPI(data).then(response =>{
             if(response.status == 200){
-              console.log("posted task")
               this.form.task_id = ""
               this.form.date = this.toDate,
-              this.form.hour = ""
+              this.form.hour = 1
               this.form.description = ""
               this.form.is_overtime = false
             }
         })
         }
         catch (error) {
-         console.log('Exception: ', error)
         throw "Sorry you can't create a new task now!"
       }
       await getWorkhourAPI().then(response => (this.workhours = response.data))
@@ -192,22 +182,3 @@ export default {
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only 
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
--->
