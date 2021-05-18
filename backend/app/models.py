@@ -17,10 +17,8 @@ class User(IdMixin, Base, TimestampMixin):
     username = Column(String(100), unique=True, index=True)
     fullname = Column(String(255))
     password = Column(String(255))
-    # is_active = Column(Boolean, default=True)
 
     workhours = relationship("Workhour", back_populates="user")
-    # tasks = relationship("UserTask", back_populates="users")
 
 class Task(IdMixin, Base, TimestampMixin):
 
@@ -30,16 +28,6 @@ class Task(IdMixin, Base, TimestampMixin):
     fullname = Column(String(255))
     organization = Column(String(255))
     workhours = relationship("Workhour", back_populates="task")
-    # users = relationship("UserTask", back_populates="tasks")
-
-# class UserTask(IdMixin, Base, TimestampMixin):
-
-#     __tablename__ = "user_task"
-#     user_id = Column(Integer, ForeignKey("user.id"))
-#     task_id = Column(Integer, ForeignKey("task.id"))
-
-#     users = relationship("User", back_populates="tasks")
-#     tasks = relationship("Task", back_populates="users")
 
 class Workhour(IdMixin, Base, TimestampMixin):
 

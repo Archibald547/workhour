@@ -162,7 +162,6 @@ export default {
           "hour": this.form.hour,
           "description": this.form.description,
           "is_overtime": this.form.is_overtime,
-          
         }
         await postWorkhourAPI(data).then(response =>{
             if(response.status == 200){

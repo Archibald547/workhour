@@ -41,7 +41,7 @@ def read_workhour(workhour_id: int, db: Session = Depends(get_db)):
     return db_workhour
 
 @router.put("/{workhour_id}", response_model=schemas.WorkhourFull)
-def edit_workhour(workhour: schemas.WorkhourUpdate, workhour_id: int, db: Session = Depends(get_db)):
+def edit_workhour(workhour: schemas.WorkhourUpdate, workhour_id: int, db: Session = Depends(get_db), user=Depends(login_manager)):
     db_workhour = crud.update_workhour(db, workhour_id=workhour_id, workhour=workhour)
     if db_workhour is None:
         raise HTTPException(status_code=404, detail="Workhour not found")

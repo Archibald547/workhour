@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.database import engine
 from app import models
 
+# For DEV only, remove below 4 lines in production
 from app.dependency import create_default_data
 models.Base.metadata.drop_all(bind=engine)
 models.Base.metadata.create_all(bind=engine)
@@ -38,4 +39,4 @@ async def root():
     return "Hello FastAPI"
 
 if __name__ == '__main__':
-	uvicorn.run("main:app", host='0.0.0.0', port=8000, reload=True)
+	uvicorn.run("main:app", host='0.0.0.0', port=8000)

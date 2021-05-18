@@ -22,28 +22,10 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     user.password = bcrypt.hashpw(bytes(user.password, 'utf-8'), bcrypt.gensalt())
     return crud.create_user(db=db, user=user)
 
-
 @router.get("/", response_model=List[schemas.User])
 def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     users = crud.get_users(db, skip=skip, limit=limit)
     return users
-
-@router.get("/test")
-def test_bcrpt():
-    password = "123"
-    bpassword = bytes(password, 'utf-8')
-    password2 = "122"
-    bpassword2 = bytes(password2, 'utf-8')
-    hpassword = bcrypt.hashpw(bpassword, bcrypt.gensalt())
-    return {
-        "password": password,
-        "bpassword": bpassword,
-        "hpassword": hpassword,
-        "len bpassword": len(bpassword),
-        "len hpassword": len(hpassword),
-        "check hpassword": bcrypt.checkpw(bpassword, hpassword),
-        "check hpassword2": bcrypt.checkpw(bpassword2, hpassword)
-    }
 
 @router.get('/my', response_model=schemas.UserFull)
 def read_user_my(user=Depends(login_manager)):
@@ -73,22 +55,3 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
-
-
-
-
-# @router.get('/v/protected')
-# def protected_route():
-#     return {'user': "user"}
-
-# @router.post("/{user_id}/workhour/", response_model=schemas.Item)
-# def create_item_for_user(
-#     user_id: int, item: schemas.ItemCreate, db: Session = Depends(get_db)
-# ):
-#     return crud.create_user_item(db=db, item=item, user_id=user_id)
-
-
-# @router.get("/items/", response_model=List[schemas.Item])
-# def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-#     items = crud.get_items(db, skip=skip, limit=limit)
-#     return items
