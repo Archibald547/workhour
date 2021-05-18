@@ -16,6 +16,7 @@ def create_default_data():
 	    models.User(username="Archie", fullname="Archibald Weng", password=hpassword),
 	    models.User(username="Boris", fullname="Boris Tien", password=hpassword),
 	    models.User(username="Larry", fullname="Larry Chuang", password=hpassword),
+	    models.User(username="Thomas", fullname="Thomas Lin", password=hpassword),
 	    models.User(username="Dora", fullname="Dora Yen", password=hpassword),
 	    models.User(username="Wimy", fullname="Wimy Kuo", password=hpassword),
 	    models.User(username="Kathy", fullname="Kathy Wu", password=hpassword),
